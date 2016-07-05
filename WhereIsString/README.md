@@ -1,5 +1,7 @@
 # WhereIsString 
 
+[![Build Status](https://travis-ci.org/duanqz/JavaDemos.svg?branch=master)](https://github.com/duanqz/JavaDemos)
+
 **Java的字符串存储在哪里呢？**
 
 Java源码:
