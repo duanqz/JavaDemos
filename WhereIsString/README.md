@@ -1,6 +1,6 @@
-Demo WhereIsString 用来回答Java的字符串存储在哪里的问题
+# WhereIsString 
 
-结论: Java的字符串都是存储在常量区(Constant Pool), 即存储在Class文件之中.
+**Java的字符串存储在哪里呢？**
 
 Java源码:
 
@@ -16,15 +16,17 @@ class WhereIsString {
 }
 ```
 
-执行make dumpclass后,可以打印出class文件,截取片段如下:
+执行`make dumpclass`后,可以打印出class文件, 在常量池中，我们可以找到如下常量:
 
 ```class
 #2 = String             #20            //  IamString
 #20 = Utf8              IamString
 ```
 
-在Constant Pool中可以看到一个String类型的常量,其内容索引至UTF8类型, UTF8类型的常量值为
-"IamString", 就是我们在源码中反复使用的字符串. 这个字符串是如何被使用的呢？
+一个String类型的常量，其内容索引至UTF8类型, 而UTF8类型的常量值为"IamString",
+就是在源码中反复被使用的字符串.
+
+这个字符串是如何被使用的呢？
 
 ```class
 WhereIsString();
@@ -56,6 +58,11 @@ public void foo();
       10: return  
 ```
 
-在构造函数中,可以看到字符串的初始化代码,第5条指令用于初始化strA,第15条指令用于初始化strB,
-可以看到都从常量池(Constants Pool)的2号索引来取值, 即从同样的地方取到了"IamString";
-在成员函数中,也使用了"IamString",同样是从常量池的2号索引取到了"IamString".
+涉及到"IamString"字符串使用的地方都有这么一条指令：
+
+```
+ldc  #2
+```
+
+表示从常量池(Constants Pool)的2号位置加载数据, 即从同样的地方取到了"IamString"。
+这表示，该类中不同的String虽然是不同对象，但其内容却是相同的，都指向常量池的同一个地方。
