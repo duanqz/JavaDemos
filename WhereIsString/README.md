@@ -4,7 +4,7 @@ Demo WhereIsString 用来回答Java的字符串存储在哪里的问题
 
 Java源码:
 
-```
+```java
 class WhereIsString {
 
   private String strA = "IamString";
@@ -21,12 +21,12 @@ class WhereIsString {
 在Constant Pool中可以看到一个String类型的常量,其内容索引至UTF8类型, UTF8类型的常量值为
 "IamString", 就是我们在源码中反复使用的字符串:
 
-```
+```class
 #2 = String             #20            //  IamString
 #20 = Utf8              IamString
 ```
 
-```
+```class
 WhereIsString();
   flags:
   Code:
