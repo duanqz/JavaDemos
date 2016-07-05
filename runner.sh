@@ -1,1 +1,2 @@
-
+cd WhereIsString
+make dumpclass
