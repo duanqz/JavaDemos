@@ -3,7 +3,7 @@ jdk:
   - openjdk7
   - oraclejdk7
   - oraclejdk8
-script: runner.sh
+script: ./runner.sh
 branches:
   only:
     - master
