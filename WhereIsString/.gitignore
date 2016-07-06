@@ -1,4 +1,1 @@
-*.class
-*.dex
-*.dump.txt
-*.class.txt
+out/

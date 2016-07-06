@@ -1,25 +1,32 @@
-DEMO=WhereIsString
+TOP=$(shell pwd)
+OUT=$(TOP)/out
+
+DX=$(TOP)/tools/dx
+DEXDUMP=$(TOP)/tools/dexdump
 
 clean:
-	@rm -rf *.class *.dex *.dump.txt
+	@rm -rf $(OUT)
 
 build: clean
-	@javac *.java
+	@[ ! -e $(OUT) ] && mkdir -p $(OUT)
+	@javac -verbose -d $(OUT) *.java
 
 dx: build
-	@tools/dx --dex --output classes.dex *.class
+	@cd $(OUT); \
+	 $(DX) --dex --output classes.dex *.class; \
+	 cd - > /dev/null
 
 dumpclass: build
 	@echo ">>> Dump classes ..."
-	@for f in `ls *.class`; \
+	@for f in `ls $(OUT)/*.class`; \
 	 do \
-	   javap -verbose $$f | tee $$f.dump.txt; \
+	   javap -verbose $$f | tee $$f.txt; \
 	 done
 	@echo "<<< Dump classes done."
 
 dumpdex: dx
 	@echo ">>> Dump classes.dex ..."
-	@tools/dexdump -fd classes.dex | tee classes.dex.dump.txt
+	$(DEXDUMP) -fd $(OUT)/classes.dex | tee $(OUT)/classes.dex.txt
 	@echo "<<< Dump classes.dex done."
 
 dumpall: dumpclass dumpdex
