@@ -17,7 +17,7 @@ dumpclass: build
 
 dumpdex: dx
 	@echo ">>> Dump $(DEMO).dex ..."
-	@tools/dexdump $(DEMO).dex | tee $(DEMO).dex.txt
+	@tools/dexdump -fd $(DEMO).dex | tee $(DEMO).dex.txt
 	@echo "<<< Dump $(DEMO).dex done."
 
 dumpall: dumpclass dumpdex
