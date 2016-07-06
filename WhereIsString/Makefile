@@ -1,24 +1,26 @@
 DEMO=WhereIsString
 
 clean:
-	@rm -rf $(DEMO).class $(DEMO).dex $(DEMO).txt
+	@rm -rf *.class *.dex *.dump.txt
 
 build: clean
-	@javac $(DEMO).java
+	@javac *.java
 
 dx: build
-	@tools/dx --dex --output $(DEMO).dex $(DEMO).class
+	@tools/dx --dex --output classes.dex *.class
 
 dumpclass: build
-	@echo ">>> Dump $(DEMO).class ..."
-	@javap -verbose $(DEMO).class | tee $(DEMO).class.txt
-	@echo "<<< Dump $(DEMO).class done"
-	@echo ""
+	@echo ">>> Dump classes ..."
+	@for f in `ls *.class`; \
+	 do \
+	   javap -verbose $$f | tee $$f.dump.txt; \
+	 done
+	@echo "<<< Dump classes done."
 
 dumpdex: dx
-	@echo ">>> Dump $(DEMO).dex ..."
-	@tools/dexdump -fd $(DEMO).dex | tee $(DEMO).dex.txt
-	@echo "<<< Dump $(DEMO).dex done."
+	@echo ">>> Dump classes.dex ..."
+	@tools/dexdump -fd classes.dex | tee classes.dex.dump.txt
+	@echo "<<< Dump classes.dex done."
 
 dumpall: dumpclass dumpdex
 	@echo ""
