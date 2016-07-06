@@ -1,2 +1,2 @@
 cd WhereIsString
-make dumpclass
+make dumpall
